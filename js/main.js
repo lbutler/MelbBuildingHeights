@@ -9,7 +9,7 @@
 	var map = L.map('map',{minZoom:13, maxZoom: 17, maxBounds: bounds, zoomControl: false}).setView([-37.8136, 144.9631], 14);
 
   new L.Control.Zoom({ position: 'topright' }).addTo(map);
-	mapLink = 'Data: <a href="https://data.melbourne.vic.gov.au/">City of Melbourne</a>  CC BY 3.0 AU | Inspired by <a href="http://maps.nicholsonroad.com/">Vancouver Building Heights</a>';
+	mapLink = 'Data: <a href="https://data.melbourne.vic.gov.au/">City of Melbourne</a>  <span class="mobile-hide">CC BY 3.0 AU | Inspired by <a href="http://maps.nicholsonroad.com/">Vancouver Building Heights</a></span>';
 	L.tileLayer('https://s3-us-west-1.amazonaws.com/melbbuildingheights/Tiles/{z}/{x}/{y}.png', { attribution: mapLink}).addTo(map);
 
 
@@ -57,21 +57,25 @@
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
+  function updateTooltip(e) {
+    $('#tooltip').html('<h3>'+getFormattedAddress(e.data.FMTADDRESS) + '</h3><br>Height: <b>' +e.data.HEIGHT + 'm</b> <br> Floors: <b>' + e.data.FLOORS + '</b>');
 
-  //utfGrid.on('click', function (e) {
-  //  //click events are fired with e.data==null if an area with no hit is clicked
-  //  if (e.data) {
-  //      alert('click: ' + e.data.HEIGHT);
-  //  } else {
-  //      alert('click: nothing');
-  //  }
-  //});
+  }
+
+
+  utfGrid.on('click', function (e) {
+    //click events are fired with e.data==null if an area with no hit is clicked
+    if (e.data) {
+      $('#tooltip').show();
+      updateTooltip(e);
+    }
+  });
   utfGrid.on('mouseover', function (e) {
       $('#tooltip').show();
-      $('#tooltip').html('<h3>'+getFormattedAddress(e.data.FMTADDRESS) + '</h3><br>Height: <b>' +e.data.HEIGHT + 'm</b> <br> Floors: <b>' + e.data.FLOORS + '</b>');
+      updateTooltip(e);
   });
   utfGrid.on('mousemove', function (e) {
-      $('#tooltip').html('<h3>'+getFormattedAddress(e.data.FMTADDRESS) + '</h3><br>Height: <b>' +e.data.HEIGHT + 'm</b> <br> Floors: <b>' + e.data.FLOORS + '</b>');
+      updateTooltip(e);
   });
   utfGrid.on('mouseout', function (e) {
       $('#tooltip').hide();
@@ -79,7 +83,7 @@
   map.addLayer(utfGrid);
 
   $(document).bind('mousemove', function(e){
-    $('#tooltip').css({
+        $('#tooltip').css({
        left:  e.pageX + 20,
        top:   e.pageY
     });

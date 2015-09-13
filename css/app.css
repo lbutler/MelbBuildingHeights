@@ -16,11 +16,13 @@ html, body, #map {
 	padding: 10px;
 	border-radius: 3px;
     position: absolute;
-    float: left;
     background-color: #000;
     color: #fff;
     display: none;
     font: 14px/16px Arial, Helvetica, sans-serif;
+    left: 0;
+    top: 40px;
+    /*background: rgba(0,0,0,0.5);*/
 }
 
 h3 {
@@ -119,4 +121,22 @@ h3 {
     float: left;
     margin-right: 8px;
     opacity: 0.7;
+}
+
+
+
+@media (max-width: 720px) {
+
+
+	.mobile-hide {
+
+		display:none;
+	}
+
+	.tooltip {
+	    background: rgba(0,0,0,0.5);
+	}
+
+
+
 }
