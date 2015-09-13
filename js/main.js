@@ -20,14 +20,14 @@
   });
 
 
-  utfGrid.on('click', function (e) {
-    //click events are fired with e.data==null if an area with no hit is clicked
-    if (e.data) {
-        alert('click: ' + e.data.HEIGHT);
-    } else {
-        alert('click: nothing');
-    }
-  });
+  //utfGrid.on('click', function (e) {
+  //  //click events are fired with e.data==null if an area with no hit is clicked
+  //  if (e.data) {
+  //      alert('click: ' + e.data.HEIGHT);
+  //  } else {
+  //      alert('click: nothing');
+  //  }
+  //});
   utfGrid.on('mouseover', function (e) {
       $('#tooltip').show();
       $('#tooltip').html('<h3>'+e.data.FMTADDRESS + '</h3><br><b>Height: </b>' +e.data.HEIGHT + 'm <br> <b>Floors: </b>' + e.data.FLOORS);
@@ -46,6 +46,42 @@
        top:   e.pageY
     });
   });
+
+
+  //Legend
+  function getColor(d) {
+      return d > 240 ? '#fd80ac' :
+             d > 190  ? '#fde6a2' :
+             d > 145  ? '#c7e9b4' :
+             d > 60  ? '#7FCDBB' :
+             d > 30   ? '#41B6C4' :
+             d > 15   ? '#1D91C0' :
+             d > 5    ? '#225EA8' :
+                        '#1c3475';
+  }
+
+  var legend = L.control({position: 'bottomright'});
+
+  legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend'),
+          grades = [0, 5, 15, 30, 60, 145, 190, 240],
+          labels = [];
+
+      div.innerHTML = 'Height (m)<br>';
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+              '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+              grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+
+      return div;
+  };
+
+  legend.addTo(map);
+
 
 
 
