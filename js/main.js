@@ -13,6 +13,42 @@
 	L.tileLayer('https://dqqqp6wf3ukae.cloudfront.net/Tiles/{z}/{x}/{y}.png', { attribution: mapLink}).addTo(map);
 
 
+  //Legend
+  function getColor(d) {
+      return d > 240 ? '#fd80ac' :
+             d > 190  ? '#fde6a2' :
+             d > 145  ? '#c7e9b4' :
+             d > 60  ? '#7FCDBB' :
+             d > 30   ? '#41B6C4' :
+             d > 15   ? '#1D91C0' :
+             d > 5    ? '#225EA8' :
+                        '#1c3475';
+  }
+
+  var legend = L.control({position: 'bottomright'});
+
+  legend.onAdd = function (map) {
+
+      var div = L.DomUtil.create('div', 'info legend'),
+          grades = [0, 5, 15, 30, 60, 145, 190, 240],
+          labels = [];
+
+      div.innerHTML = 'Height (m)<br>';
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+              '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+              grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+
+      return div;
+  };
+
+  legend.addTo(map);
+
+
+
   // UTFGrid
 
   var utfGrid = new L.UtfGrid('https://dqqqp6wf3ukae.cloudfront.net/Tiles/{z}/{x}/{y}.grid.json', {
@@ -90,39 +126,7 @@
   });
 
 
-  //Legend
-  function getColor(d) {
-      return d > 240 ? '#fd80ac' :
-             d > 190  ? '#fde6a2' :
-             d > 145  ? '#c7e9b4' :
-             d > 60  ? '#7FCDBB' :
-             d > 30   ? '#41B6C4' :
-             d > 15   ? '#1D91C0' :
-             d > 5    ? '#225EA8' :
-                        '#1c3475';
-  }
 
-  var legend = L.control({position: 'bottomright'});
-
-  legend.onAdd = function (map) {
-
-      var div = L.DomUtil.create('div', 'info legend'),
-          grades = [0, 5, 15, 30, 60, 145, 190, 240],
-          labels = [];
-
-      div.innerHTML = 'Height (m)<br>';
-
-      // loop through our density intervals and generate a label with a colored square for each interval
-      for (var i = 0; i < grades.length; i++) {
-          div.innerHTML +=
-              '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-              grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-      }
-
-      return div;
-  };
-
-  legend.addTo(map);
 
 
 
