@@ -37,7 +37,6 @@ h3 {
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
     position: absolute;
     z-index: 1000;
-    pointer-events: none;
     left: 0;
     top: 0;
     width: 100%;
@@ -60,14 +59,31 @@ h3 {
 	color: #777;
 	font-weight: bold;
 	padding-right: 5px;
+
+}
+
+.author a {
+	text-decoration: none;
+}
+
+.author a:visited {
+	color: #777;
 }
 
 .author i {
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-top: 5px;
-	color: #fff;
+	color: #777;
 	font-size: 1.9em;
+}
+
+.author i:hover {
+	color: #fff;
+}
+
+.author a:hover {
+	color: #fff;
 }
 
 .author .fa-twitter-square {
