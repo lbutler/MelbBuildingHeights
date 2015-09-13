@@ -1,8 +1,59 @@
 body {
     padding: 0;
     margin: 0;
+    overflow: hidden; /* This is to make the tooltip not create scrollbars */
 }
 html, body, #map {
     height: 100%;
     width: 100%;
+}
+
+.leaflet-container {
+    background-color: #1C1E23;
+}
+
+.tooltip {
+	padding: 10px;
+	border-radius: 3px;
+    position: absolute;
+    float: left;
+    background-color: #000;
+    color: #fff;
+    display: none;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+}
+
+h3 {
+	margin: 0;
+}
+
+
+
+.app-title {
+	padding: 6px 8px;
+    font: 12px/14px Arial, Helvetica, sans-serif;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0;
+}
+
+.header {
+	font-size: 1.5em;
+}
+
+.author {
+	float:right;
+	font-size: 1.3em;
+}
+
+
+.leaflet-top .leaflet-control {
+    margin-top: 65px;
 }
