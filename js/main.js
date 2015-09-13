@@ -19,6 +19,44 @@
       useJsonP: false
   });
 
+  function getFormattedAddress(address) {
+
+
+    var addressParts = address.split(' ');
+
+    //Splitting the Address to multiple lines, most times this will be three words from the right
+    //however some suburbs have two words so making exceptions here, how terrible
+    var suburbPosition = 3;
+    if ($.inArray(addressParts[addressParts.length - 1], ['3051','3002','3054','3003', '3207','3141']) !== -1) {
+      suburbPosition = 4;
+    }
+    if ( addressParts[addressParts.length - 3] === 'JOLIMONT' ) {
+      suburbPosition = 3;
+    }
+
+    //Check to see if address has a building name by looking at the first character
+    //if its not a number then look for the next number and insert a break, once again should probably have done this on the json
+    if ( !isNumeric(addressParts[0].charAt(0) )){
+      for (var i = 0; i < addressParts.length - 1; i++) {
+        if (isNumeric(addressParts[i].charAt(0))) {
+          addressParts.splice(i,0,'<br>');
+          i = addressParts.length;
+        }
+      }
+    }
+
+
+    var firstHalf = addressParts.slice(0,Math.max(addressParts.length - suburbPosition, 1));
+    var lastHalf = addressParts.slice(Math.max(addressParts.length - suburbPosition, 1));
+
+
+    return  firstHalf.join(' ') + '<br>' + lastHalf.join(' ');
+  }
+
+  function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
+
 
   //utfGrid.on('click', function (e) {
   //  //click events are fired with e.data==null if an area with no hit is clicked
@@ -30,10 +68,10 @@
   //});
   utfGrid.on('mouseover', function (e) {
       $('#tooltip').show();
-      $('#tooltip').html('<h3>'+e.data.FMTADDRESS + '</h3><br><b>Height: </b>' +e.data.HEIGHT + 'm <br> <b>Floors: </b>' + e.data.FLOORS);
+      $('#tooltip').html('<h3>'+getFormattedAddress(e.data.FMTADDRESS) + '</h3><br>Height: <b>' +e.data.HEIGHT + 'm</b> <br> Floors: <b>' + e.data.FLOORS + '</b>');
   });
   utfGrid.on('mousemove', function (e) {
-      $('#tooltip').html('<h3>'+e.data.FMTADDRESS + '</h3><br><b>Height: </b>' +e.data.HEIGHT + 'm <br> <b>Floors: </b>' + e.data.FLOORS);
+      $('#tooltip').html('<h3>'+getFormattedAddress(e.data.FMTADDRESS) + '</h3><br>Height: <b>' +e.data.HEIGHT + 'm</b> <br> Floors: <b>' + e.data.FLOORS + '</b>');
   });
   utfGrid.on('mouseout', function (e) {
       $('#tooltip').hide();
