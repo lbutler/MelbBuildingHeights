@@ -10,12 +10,12 @@
 
   new L.Control.Zoom({ position: 'topright' }).addTo(map);
 	mapLink = 'Data: <a href="https://data.melbourne.vic.gov.au/">City of Melbourne</a>  <span class="mobile-hide">CC BY 3.0 AU | Inspired by <a href="http://maps.nicholsonroad.com/">Vancouver Building Heights</a></span>';
-	L.tileLayer('https://s3-us-west-1.amazonaws.com/melbbuildingheights/Tiles/{z}/{x}/{y}.png', { attribution: mapLink}).addTo(map);
+	L.tileLayer('https://dqqqp6wf3ukae.cloudfront.net/Tiles/{z}/{x}/{y}.png', { attribution: mapLink}).addTo(map);
 
 
   // UTFGrid
 
-  var utfGrid = new L.UtfGrid('https://s3-us-west-1.amazonaws.com/melbbuildingheights/Tiles/{z}/{x}/{y}.grid.json', {
+  var utfGrid = new L.UtfGrid('https://dqqqp6wf3ukae.cloudfront.net/Tiles/{z}/{x}/{y}.grid.json', {
       useJsonP: false
   });
 
